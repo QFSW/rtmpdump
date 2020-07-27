@@ -4251,6 +4251,9 @@ CloseInternal(RTMP *r, int reconnect)
 int
 RTMPSockBuf_Fill(RTMPSockBuf *sb)
 {
+  if (sb->fill_func)
+    return sb->fill_func(sb);
+
   int nBytes;
 
   if (!sb->sb_size)
@@ -4296,6 +4299,9 @@ RTMPSockBuf_Fill(RTMPSockBuf *sb)
 int
 RTMPSockBuf_Send(RTMPSockBuf *sb, const char *buf, int len)
 {
+  if (sb->send_func)
+    return sb->send_func(sb, buf, len);
+
   int rc;
 
 #ifdef _DEBUG
@@ -4318,6 +4324,9 @@ RTMPSockBuf_Send(RTMPSockBuf *sb, const char *buf, int len)
 int
 RTMPSockBuf_Close(RTMPSockBuf *sb)
 {
+  if (sb->close_func)
+    return sb->close_func(sb);
+
 #if defined(CRYPTO) && !defined(NO_SSL)
   if (sb->sb_ssl)
     {

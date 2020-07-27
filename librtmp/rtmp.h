@@ -132,9 +132,9 @@ extern "C"
     char sb_buf[RTMP_BUFFER_CACHE_SIZE];	/* data read from socket */
     int sb_timedout;
     void *sb_ssl;
-    void (*close_func)(struct RTMPSockBuf*);
-    void (*fill_func)(struct RTMPSockBuf*);
-    void (*send_func)(struct RTMPSockBuf*, const char*, int);
+    int (*close_func)(struct RTMPSockBuf*);
+    int (*fill_func)(struct RTMPSockBuf*);
+    int (*send_func)(struct RTMPSockBuf*, const char*, int);
     void *opaque;
   } RTMPSockBuf;
 
