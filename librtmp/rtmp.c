@@ -105,6 +105,8 @@ static const char *RTMPT_cmds[] = {
   "close"
 };
 
+void (*on_init)(RTMP*) = NULL;
+
 typedef enum {
   RTMPT_OPEN=0, RTMPT_SEND, RTMPT_IDLE, RTMPT_CLOSE
 } RTMPTCmd;
@@ -346,6 +348,9 @@ RTMP_Init(RTMP *r)
   r->m_fVideoCodecs = 252.0;
   r->Link.timeout = 30;
   r->Link.swfAge = 30;
+
+  if (on_init)
+    on_init(r);
 }
 
 void

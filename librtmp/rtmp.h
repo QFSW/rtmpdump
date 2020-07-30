@@ -375,6 +375,8 @@ extern "C"
   int RTMP_HashSWF(const char *url, unsigned int *size, unsigned char *hash,
 		   int age);
 
+  void (*on_init)(RTMP*); 
+
 #ifdef __cplusplus
 };
 #endif
