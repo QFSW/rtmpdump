@@ -105,8 +105,6 @@ static const char *RTMPT_cmds[] = {
   "close"
 };
 
-void (*on_init)(RTMP*) = NULL;
-
 typedef enum {
   RTMPT_OPEN=0, RTMPT_SEND, RTMPT_IDLE, RTMPT_CLOSE
 } RTMPTCmd;
@@ -328,6 +326,14 @@ RTMP_Free(RTMP *r)
   free(r);
 }
 
+void (*init_handler)(RTMP*) = NULL;
+
+void
+RTMP_SetInitHandler(void (*handler)(RTMP*))
+{
+  init_handler = handler;
+}
+
 void
 RTMP_Init(RTMP *r)
 {
@@ -349,8 +355,8 @@ RTMP_Init(RTMP *r)
   r->Link.timeout = 30;
   r->Link.swfAge = 30;
 
-  if (on_init)
-    on_init(r);
+  if (init_handler)
+    init_handler(r);
 }
 
 void

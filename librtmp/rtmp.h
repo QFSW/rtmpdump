@@ -335,6 +335,7 @@ extern "C"
   int RTMP_GetNextMediaPacket(RTMP *r, RTMPPacket *packet);
   int RTMP_ClientPacket(RTMP *r, RTMPPacket *packet);
 
+  void RTMP_SetInitHandler(void (*handler)(RTMP*));
   void RTMP_Init(RTMP *r);
   void RTMP_Close(RTMP *r);
   RTMP *RTMP_Alloc(void);
@@ -374,8 +375,6 @@ extern "C"
 /* hashswf.c */
   int RTMP_HashSWF(const char *url, unsigned int *size, unsigned char *hash,
 		   int age);
-
-  void (*on_init)(RTMP*); 
 
 #ifdef __cplusplus
 };
